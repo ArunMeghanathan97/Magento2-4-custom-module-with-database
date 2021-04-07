@@ -4,6 +4,9 @@ namespace Megha\UserForm\Controller\Result;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 use Megha\UserForm\Model\UserFormFactory;
 
@@ -39,6 +42,9 @@ class Index extends Action
         $this->userFormFactory  = $userFormFactory;
     }
 
+    /**
+     * @return ResponseInterface|ResultInterface|Page
+     */
     public function execute()
     {
         $data                   = $this->getRequest()->getParams();
@@ -47,8 +53,9 @@ class Index extends Action
         if (isset($data['id'])) {
             $modeldata          = $this->userFormFactory->create()->getCollection()->addFieldToFilter('id', $data['id'])->getData();
             if (count($modeldata)>0) {
-                foreach ($modeldata[0] as $k => $v)
-                $block->setData($k, $v);
+                foreach ($modeldata[0] as $k => $v) {
+                    $block->setData($k, $v);
+                }
             }
         }
         return $page;

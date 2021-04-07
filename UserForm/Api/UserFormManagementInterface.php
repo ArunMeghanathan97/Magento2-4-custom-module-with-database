@@ -13,4 +13,9 @@ interface UserFormManagementInterface
      * @return UserFormInterface
      */
     public function saveUser();
+
+    /**
+     * @return mixed
+     */
+    public function deleteUser();
 }
